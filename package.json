@@ -14,10 +14,11 @@
     "/dist"
   ],
   "keywords": [
-    "CoR",
     "StoneJS",
+    "Dictionnary",
+    "Dot notation",
     "ConfigurationManager",
-    "Chain of Responsibility"
+    "Deep notation access"
   ],
   "homepage": "https://github.com/stonemjs/configuration-manager#readme",
   "bugs": {
