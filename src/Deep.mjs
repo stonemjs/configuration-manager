@@ -1,10 +1,12 @@
+import { Macroable } from '@stone-js/macroable'
+
 /**
  * Class representing a Deep.
  * Fluent and simple API for dictionnary management.
  *
  * @author Mr. Stone <pierre.evens16@gmail.com>
  */
-export class Deep {
+export class Deep extends Macroable {
   /**
    * Determine whether the given value is array accessible.
    *
