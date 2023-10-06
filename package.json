@@ -1,6 +1,6 @@
 {
   "name": "@stone-js/configuration-manager",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Fluent and simple API with deep dot access to manage configurations in any project",
   "main": "./src/index.mjs",
   "module": "./src/index.mjs",
