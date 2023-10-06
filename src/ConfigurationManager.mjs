@@ -1,4 +1,4 @@
-import { Macro } from '@stone-js/macroable'
+import { Macroable } from '@stone-js/macroable'
 import { Deep } from './Deep.mjs'
 
 /**
@@ -6,8 +6,7 @@ import { Deep } from './Deep.mjs'
  *
  * @author Mr. Stone <pierre.evens16@gmail.com>
  */
-@Macro
-export class ConfigurationManager {
+export class ConfigurationManager extends Macroable {
   #items
 
   /**
@@ -16,6 +15,7 @@ export class ConfigurationManager {
    * @param {object} [items={}]
    */
   constructor (items = {}) {
+    super()
     this.#items = { ...items, __proto__: null }
   }
 
