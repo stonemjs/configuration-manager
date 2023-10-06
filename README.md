@@ -22,3 +22,8 @@ $ npm i @stone-js/configuration-manager
 # Install with yarn
 $ yarn add @stone-js/configuration-manager
 ```
+
+---
+
+## Credits
+- [Laravel Config](https://github.com/laravel/framework/blob/10.x/src/Illuminate/Config/Repository.php)
