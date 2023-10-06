@@ -5,7 +5,7 @@
 ![npm](https://img.shields.io/npm/dm/@stone-js/configuration-manager)
 ![Maintenance](https://img.shields.io/maintenance/yes/2023)
 
-Fluent and simple API to manager configurations in any JS project
+Fluent and simple API to manage configurations in any JS project
 
 ## Table of Contents
 
