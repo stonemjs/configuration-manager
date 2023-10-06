@@ -1,3 +1,9 @@
+/**
+ * Class representing a Deep.
+ * Fluent and simple API for dictionnary management.
+ *
+ * @author Mr. Stone <pierre.evens16@gmail.com>
+ */
 export class Deep {
   /**
    * Determine whether the given value is array accessible.

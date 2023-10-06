@@ -1,4 +1,5 @@
 import { Macro } from '@stone-js/macroable'
+import { Deep } from './Deep.mjs'
 
 /**
  * Class representing a ConfigurationManager.
@@ -15,7 +16,7 @@ export class ConfigurationManager {
    * @param {object} [items={}]
    */
   constructor (items = {}) {
-    this.#items = new Map(Object.entries(items))
+    this.#items = { ...items, __proto__: null }
   }
 
   /**
@@ -31,8 +32,8 @@ export class ConfigurationManager {
   /**
    * Get the specified configuration value.
    *
-   * @param  {string|array|object} key
-   * @param  {any}                 fallback
+   * @param  {string|object} key
+   * @param  {any}           fallback
    * @return {any}
    */
   get (key, fallback = null) {
@@ -40,28 +41,18 @@ export class ConfigurationManager {
       return this.getMany(key)
     }
 
-    return key
-      .split('.')
-      .reduce((prev, curr) => {
-        return prev && prev[curr] ? prev[curr] : fallback
-      }, Object.fromEntries(this.#items.entries()))
+    return Deep.get(this.#items, key, fallback)
   }
 
   /**
    * Get many configuration values.
    *
-   * @param  {array|object} keys
+   * @param  {object} keys
    * @return {object}
    */
   getMany (keys) {
-    const entries = Array.isArray(keys)
-      ? keys.map(v => [v, null])
-      : Object.entries(keys)
-    
-    return entries.reduce((prev, [key, fallback]) => {
-      prev[key] = this.#items.has(key) ? this.#items.get(key) : fallback
-      return prev
-    }, {})
+    const entries = Array.isArray(keys) ? keys.map(v => [v, null]) : Object.entries(keys)
+    return entries.reduce((results, [key, fallback]) => ({ ...results, [key]: Deep.get(this.#items, key, fallback)}), {})
   }
 
   /**
@@ -71,67 +62,22 @@ export class ConfigurationManager {
    * @return {boolean}
    */
   has (key) {
-    return this.#items.has(key)
+    return Deep.has(this.#items, key)
   }
 
   /**
    * Set a given configuration value.
    *
-   * @param  {string|object}  key
-   * @param  {any}            value
+   * @param  {string|object} key
+   * @param  {any}           value
    * @return {this}
    */
   set (key, value = null) {
-    if (typeof key === 'object') {
-      for (const [name, val] of Object.entries(key)) {
-        this.#items.set(name, val)
-      }
-    } else {
-      key.split('.').reduce((prev, curr, i, arr) => {
-        if (arr.length === 1) {
-          prev.set(curr, value)
-        } else if (arr.length === (i+1)) {
-          prev[curr] = value
-        } else {
-          prev = prev[curr] ?? {}
-        }
-        return prev
-      }, this.#items)
-    }
-
-    return this
-  }
-
-  /**
-   * Prepend a value onto an array configuration value.
-   *
-   * @param  {string}  key
-   * @param  {any}     value
-   * @return {this}
-   */
-  prepend (key, value) {
-    if (!Array.isArray(this.#items.get(key))) {
-      this.#items.set(key, value)
-    }
-
-    this.#items.get(key).unshift(value)
+    key = typeof key === 'object' ? key : { [key]: value }
     
-    return this
-  }
-
-  /**
-   * Push a value onto an array configuration value.
-   *
-   * @param  {string}  key
-   * @param  {any}     value
-   * @return {this}
-   */
-  push (key, value) {
-    if (!Array.isArray(this.#items.get(key))) {
-      this.#items.set(key, value)
+    for (const [name, val] of Object.entries(key)) {
+      Deep.set(this.#items, name, val)
     }
-
-    this.#items.get(key).push(value)
 
     return this
   }
@@ -142,7 +88,7 @@ export class ConfigurationManager {
    * @return {object}
    */
   all () {
-    return Object.fromEntries(this.#items.entries())
+    return this.#items
   }
 
   /**
@@ -151,7 +97,7 @@ export class ConfigurationManager {
    * @return {this}
    */
   clear () {
-    this.#items.clear()
+    this.#items = Object.create(null)
 
     return this
   }
