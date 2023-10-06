@@ -52,7 +52,7 @@ export class ConfigurationManager extends Macroable {
    */
   getMany (keys) {
     const entries = Array.isArray(keys) ? keys.map(v => [v, null]) : Object.entries(keys)
-    return entries.reduce((results, [key, fallback]) => ({ ...results, [key]: Deep.get(this.#items, key, fallback)}), {})
+    return entries.reduce((results, [key, fallback]) => ({ ...results, [key]: Deep.get(this.#items, key, fallback) }), {})
   }
 
   /**
@@ -74,7 +74,7 @@ export class ConfigurationManager extends Macroable {
    */
   set (key, value = null) {
     key = typeof key === 'object' ? key : { [key]: value }
-    
+
     for (const [name, val] of Object.entries(key)) {
       Deep.set(this.#items, name, val)
     }

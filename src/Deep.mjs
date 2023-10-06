@@ -125,7 +125,7 @@ export class Deep extends Macroable {
     if (this.accessible(items)) {
       return Object.fromEntries(Object.entries(items).sort(callback))
     }
-    
+
     return items
   }
 
@@ -221,12 +221,12 @@ export class Deep extends Macroable {
         delete items[key]
         continue
       }
-      
+
       const parts = key.split('.')
 
       items = original
 
-      while(parts.length > 1) {
+      while (parts.length > 1) {
         const part = parts.shift()
         if (this.accessible(items[part]) && items[part]) {
           items = items[part]
