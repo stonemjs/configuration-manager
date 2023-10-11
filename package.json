@@ -76,6 +76,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@stone-js/macroable": "^1.0.0"
+    "@stone-js/macroable": "^1.0.0",
+    "lodash": "^4.17.21"
   }
 }
