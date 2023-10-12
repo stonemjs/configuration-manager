@@ -1,5 +1,5 @@
-import { get, set, has } from 'lodash'
 import { Macroable } from '@stone-js/macroable'
+import { get, set, has, mergeWith } from 'lodash'
 
 /**
  * Class representing a ConfigurationManager.
@@ -80,6 +80,21 @@ export class ConfigurationManager extends Macroable {
     }
 
     return this
+  }
+
+  /**
+   * Allows providers to define the default config for a module.
+   *
+   * @param  {string|string[]|object} key
+   * @param  {any}                    value
+   * @return {this}
+   */
+  defaults (key, value) {
+    if (this.has(key)) {
+      mergeWith(value, this.get(key))
+    }
+
+    return this.set(key, value)
   }
 
   /**
