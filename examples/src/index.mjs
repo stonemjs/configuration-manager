@@ -1,5 +1,14 @@
 import { ConfigurationManager } from '../../src/index.mjs'
 
+const getVersion = (version) => {
+  version = process.env.APP_VERSION ?? version
+  if (!version) {
+    throw new Error('Version must not be empty')
+  }
+  return version
+}
+console.log('Config values')
+
 /**
  * ConfigurationManager example
  */
@@ -17,10 +26,13 @@ const items = {
   aws: {
     lambda: {
       name: 'Login',
-      alias: 'dev'
+      alias: 'dev',
+      version: getVersion(12)
     }
-  }
+  },
 }
+
+console.log('New config instance')
 
 const config = new ConfigurationManager(items)
 
