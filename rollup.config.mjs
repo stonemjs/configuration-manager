@@ -1,4 +1,3 @@
-import json from '@rollup/plugin-json'
 import babel from '@rollup/plugin-babel'
 import multi from '@rollup/plugin-multi-entry'
 import commonjs from '@rollup/plugin-commonjs'
@@ -8,20 +7,24 @@ import nodeExternals from 'rollup-plugin-node-externals'
 const inputs = {
   pipes: 'src/pipes/*.mjs',
   resolvers: 'src/resolvers/*.mjs',
-  index: ['src/Config.mjs', 'src/ConfigBuilder.mjs', 'src/ConfigLoader.mjs'],
+  index: [
+    'src/Config.mjs',
+    'src/ConfigLoader.mjs',
+    'src/ConfigBuilder.mjs'
+  ],
 }
 
 export default Object.entries(inputs).map(([name, input]) => ({
 	input,
 	output: [
-    { format: 'es', file: `dist/${name}.mjs` },
-    { format: 'cjs', file: `dist/${name}.cjs` }
+    { format: 'es', file: `dist/${name}.js` }
   ],
   plugins: [
-    json(),
     multi(),
-    nodeExternals({ deps: false }), // Must always be before `nodeResolve()`.
-    nodeResolve(),
+    nodeExternals(), // Must always be before `nodeResolve()`.
+    nodeResolve({
+      exportConditions: ['node', 'import', 'require', 'default']
+    }),
     babel({ babelHelpers: 'bundled' }),
     commonjs()
   ]

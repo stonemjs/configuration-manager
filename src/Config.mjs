@@ -1,8 +1,5 @@
-import get from 'lodash/get'
-import set from 'lodash/set'
-import has from 'lodash/has'
-import mergeWith from 'lodash/mergeWith'
 import { Proxiable } from '@stone-js/common'
+import { get, set, has, mergeWith } from 'lodash-es'
 
 /**
  * Class representing a Config.

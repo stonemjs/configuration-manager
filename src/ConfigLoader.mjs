@@ -1,5 +1,3 @@
-import { join } from 'node:path'
-import { cwd } from 'node:process'
 import { ConfigBuilder } from './ConfigBuilder.mjs'
 import { OptionsResolver } from './resolvers/OptionsResolver.mjs'
 
@@ -34,13 +32,17 @@ export class ConfigLoader {
   /**
    * Load config
    *
+   * @param   {Object} modules
+   * @param   {Object} modules.app
+   * @param   {Object} modules.options
+   * @param   {Object} modules.commands
    * @returns {Object}
    */
-  async load () {
+  async load (modules) {
     const passable = {}
 
-    for (const name of Object.keys(this.#options.autoload.modules)) {
-      passable[name] = Object.values(await import(new URL(join('./.stone', `${name}.mjs`), `file://${cwd()}/`)))
+    for (const [name, value] of Object.entries(modules)) {
+      passable[name] = Object.values(value)
     }
 
     return ConfigBuilder

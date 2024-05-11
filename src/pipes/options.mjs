@@ -2,8 +2,9 @@
  * Passable.
  *
  * @typedef  {Object} Passable
+ * @property {Object} app
  * @property {Object} options
- * @property {Object} modules
+ * @property {Object} commands
  */
 
 /**
@@ -14,7 +15,7 @@
  * @returns {Passable}
  */
 export const HandlerPipe = (passable, next) => {
-  const module = passable.modules.find(module => module.$$metadata$$?.mainHandler)
+  const module = passable.app.find(module => module.$$metadata$$?.mainHandler)
   passable.options.app.handler = module ?? passable.options.app.handler
   return next(passable)
 }
@@ -27,7 +28,7 @@ export const HandlerPipe = (passable, next) => {
  * @returns {Passable}
  */
 export const ServicePipe = (passable, next) => {
-  const modules = passable.modules.filter(module => module.$$metadata$$?.service)
+  const modules = passable.app.filter(module => module.$$metadata$$?.service)
   passable.options.app.services = modules.concat(passable.options.app.services)
   return next(passable)
 }
@@ -40,7 +41,7 @@ export const ServicePipe = (passable, next) => {
  * @returns {Passable}
  */
 export const ProviderPipe = (passable, next) => {
-  const modules = passable.modules.filter(module => module.$$metadata$$?.provider)
+  const modules = passable.app.filter(module => module.$$metadata$$?.provider)
   passable.options.app.providers = modules.concat(passable.options.app.providers)
   return next(passable)
 }
@@ -53,21 +54,8 @@ export const ProviderPipe = (passable, next) => {
  * @returns {Passable}
  */
 export const ControllerPipe = (passable, next) => {
-  const modules = passable.modules.filter(module => module.$$metadata$$?.controller)
+  const modules = passable.app.filter(module => module.$$metadata$$?.controller)
   passable.options.app.routes = modules.concat(passable.options.app.routes)
-  return next(passable)
-}
-
-/**
- * Handle Command decorator.
- *
- * @param   {Passable} passable - Input data to transform via middleware.
- * @param   {Function} next - Pass to next middleware.
- * @returns {Passable}
- */
-export const CommandPipe = (passable, next) => {
-  const modules = passable.modules.filter(module => module.$$metadata$$?.command)
-  passable.options.app.commands = modules.concat(passable.options.app.commands)
   return next(passable)
 }
 
@@ -79,8 +67,8 @@ export const CommandPipe = (passable, next) => {
  * @returns {Passable}
  */
 export const ListenerPipe = (passable, next) => {
-  const modules = passable.modules.filter(module => module.$$metadata$$?.listener)
-  passable.options.app.listeners = { ...modules, ...passable.options.app.listeners }
+  const modules = passable.app.filter(module => module.$$metadata$$?.listener)
+  passable.options.app.listeners = modules.concat(passable.options.app.listeners)
   return next(passable)
 }
 
@@ -92,7 +80,7 @@ export const ListenerPipe = (passable, next) => {
  * @returns {Passable}
  */
 export const SubscriberPipe = (passable, next) => {
-  const modules = passable.modules.filter(module => module.$$metadata$$?.subscriber)
+  const modules = passable.app.filter(module => module.$$metadata$$?.subscriber)
   passable.options.app.subscribers = modules.concat(passable.options.app.subscribers)
   return next(passable)
 }
@@ -105,7 +93,7 @@ export const SubscriberPipe = (passable, next) => {
  * @returns {Passable}
  */
 export const MiddlewarePipe = (passable, next) => {
-  const modules = passable.modules.filter(module => module.$$metadata$$?.middleware)
+  const modules = passable.app.filter(module => module.$$metadata$$?.middleware)
   passable.options.app.services = modules.concat(passable.options.app.services)
   return next(passable)
 }
