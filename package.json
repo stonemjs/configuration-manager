@@ -25,14 +25,6 @@
     ".": {
       "types": "./dist/types/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./pipes": {
-      "types": "./dist/types/pipes.d.ts",
-      "default": "./dist/pipes.js"
-    },
-    "./resolvers": {
-      "types": "./dist/types/resolvers.d.ts",
-      "default": "./dist/resolvers.js"
     }
   },
   "engines": {
@@ -57,13 +49,9 @@
     "test:html": "npm run test:cvg -- --coverageReporters=html text",
     "test:lcov": "npm run test:cvg -- --coverageReporters=lcov text"
   },
-  "peerDependencies": {
-    "@stone-js/common": "^0.0.1",
-    "@stone-js/pipeline": "^0.0.1"
-  },
   "dependencies": {
-    "deepmerge": "^4.3.1",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.21",
+    "@stone-js/common": "^0.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.22.20",

@@ -1,9 +1,7 @@
 {
   // https://www.typescriptlang.org/docs/handbook/declaration-files/dts-from-js.html
   "include": [
-    "dist/index.js",
-    "dist/pipes.js",
-    "dist/resolvers.js"
+    "dist/index.js"
   ],
   "compilerOptions": {
     "skipLibCheck": true,

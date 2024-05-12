@@ -5,13 +5,7 @@ import nodeResolve from '@rollup/plugin-node-resolve'
 import nodeExternals from 'rollup-plugin-node-externals'
 
 const inputs = {
-  pipes: 'src/pipes/*.mjs',
-  resolvers: 'src/resolvers/*.mjs',
-  index: [
-    'src/Config.mjs',
-    'src/ConfigLoader.mjs',
-    'src/ConfigBuilder.mjs'
-  ],
+  index: ['src/Config.mjs'],
 }
 
 export default Object.entries(inputs).map(([name, input]) => ({
