@@ -97,3 +97,17 @@ export const MiddlewarePipe = (passable, next) => {
   passable.options.app.services = modules.concat(passable.options.app.services)
   return next(passable)
 }
+
+/**
+ * Handle Adapter decorator.
+ *
+ * @param   {Passable} passable - Input data to transform via middleware.
+ * @param   {Function} next - Pass to next middleware.
+ * @returns {Passable}
+ */
+export const AdapterPipe = (passable, next) => {
+  const module = passable.app.find(module => module.$$metadata$$?.adapters)
+  const adapters = module?.$$metadata$$?.adapters ?? []
+  passable.options.adapters = adapters.concat(passable.options.adapters)
+  return next(passable)
+}
